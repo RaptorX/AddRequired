@@ -96,6 +96,7 @@ ButtonOkay(CtrlHwnd, GuiEvent, EventInfo, ErrLevel:="")
 		hFile := FileOpen(A_LoopFileFullPath, "w")
 		hFile.Seek(0, 0)
 		hFile.Write(Requirement "`n" wFile)
+		hFile.Close()
 		OutputDebug, % "fixed " A_LoopFileFullPath
 	}
 	ExitApp
