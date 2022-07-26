@@ -1,7 +1,7 @@
 #SingleInstance force
 #Requires Autohotkey v1.1.33+
 ;--
-;@Ahk2Exe-SetVersion 1.0-alpha.2
+;@Ahk2Exe-SetVersion 1.0-alpha.3
 ;@Ahk2Exe-SetProductName addRequired
 ;@Ahk2Exe-SetDescription Adds requirement to all ahk files in the selected folder recursively
 /**
@@ -39,7 +39,7 @@
  #Include <ScriptObject\ScriptObject>
  global script := {base         : script
                   ,name          : regexreplace(A_ScriptName, "\.\w+")
-                  ,version      : "1.0-alpha.2"
+                  ,version      : "1.0-alpha.3"
                   ,author       : "RaptorX"
                   ,email        : ""
                   ,crtdate      : "July 26, 2022"
@@ -64,7 +64,7 @@ FileSelectFolder, wDir, *%A_ScriptDir%
 if !wDir
 {
 	MsgBox, % "No directory selected"
-	return
+	ExitApp
 }
 
 Gui, add, Edit, w200 vRequirement, % "#Requires Autohotkey v1.1.33+"
@@ -74,18 +74,35 @@ return
 
 ButtonOkay(CtrlHwnd, GuiEvent, EventInfo, ErrLevel:="")
 {
-	Loop, Files, %wDir%\*.ahk, FDR
+	static wProgress
+	global wDir, Requirement
+
+	Gui, Submit
+	Gui Progress:new, -Caption
+	Gui Add, Progress, vwProgress -Smooth 0x8 w350 h5 ; PBS_MARQUEE = 0x8
+	Gui Add, Text, w350 Center, Working
+	Gui Show
+	
+	Loop, Files, %wDir%\*.ahk, FR
 	{
 		FileRead, wFile, %A_LoopFileFullPath%
+		GuiControl,, wProgress, 1
 		if InStr(wFile, "#Requires")
 		{
-			OutputDebug, % "true"
+			OutputDebug, % A_LoopFileName " already has requirement"
 			Continue
 		}
 
 		hFile := FileOpen(A_LoopFileFullPath, "w")
 		hFile.Seek(0, 0)
 		hFile.Write(Requirement "`n" wFile)
-		OutputDebug, % "fixed " A_LoopFileName
+		hFile.Close()
+		OutputDebug, % "fixed " A_LoopFileFullPath
 	}
+	ExitApp
+}
+
+GuiClose()
+{
+	ExitApp
 }
