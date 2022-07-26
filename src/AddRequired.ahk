@@ -39,7 +39,7 @@
  #Include <ScriptObject\ScriptObject>
  global script := {base         : script
                  ,name          : regexreplace(A_ScriptName, "\.\w+")
-                 ,version      : "0.1.0"
+                 ,version      : "1.0-alpha"
                  ,author       : "RaptorX"
                  ,email        : ""
                  ,crtdate      : "July 26, 2022"
