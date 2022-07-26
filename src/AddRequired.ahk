@@ -83,19 +83,20 @@ ButtonOkay(CtrlHwnd, GuiEvent, EventInfo, ErrLevel:="")
 	Gui Add, Text, w350 Center, Working
 	Gui Show
 	
+	Loop, Files, %wDir%\*.ahk, FR
 	{
 		FileRead, wFile, %A_LoopFileFullPath%
 		GuiControl,, wProgress, 1
 		if InStr(wFile, "#Requires")
 		{
-			OutputDebug, % "true"
+			OutputDebug, % A_LoopFileName " already has requirement"
 			Continue
 		}
 
 		hFile := FileOpen(A_LoopFileFullPath, "w")
 		hFile.Seek(0, 0)
 		hFile.Write(Requirement "`n" wFile)
-		OutputDebug, % "fixed " A_LoopFileName
+		OutputDebug, % "fixed " A_LoopFileFullPath
 	}
 	ExitApp
 }
