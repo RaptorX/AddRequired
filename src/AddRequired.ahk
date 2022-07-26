@@ -62,7 +62,10 @@ Catch err
 
 FileSelectFolder, wDir, *%A_ScriptDir%
 if !wDir
+{
 	MsgBox, % "No directory selected"
+	return
+}
 
 Gui, add, Edit, w200 vRequirement, % "#Requires Autohotkey v1.1.33+"
 Gui, add, Button, x+5 w75, % "Okay"
