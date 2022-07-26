@@ -1,7 +1,7 @@
 #SingleInstance force
 #Requires Autohotkey v1.1.33+
 ;--
-;@Ahk2Exe-SetVersion 1.0-alpha.1
+;@Ahk2Exe-SetVersion 1.0-alpha.2
 ;@Ahk2Exe-SetProductName addRequired
 ;@Ahk2Exe-SetDescription Adds requirement to all ahk files in the selected folder recursively
 /**
@@ -39,7 +39,7 @@
  #Include <ScriptObject\ScriptObject>
  global script := {base         : script
                   ,name          : regexreplace(A_ScriptName, "\.\w+")
-                  ,version      : "1.0-alpha.1"
+                  ,version      : "1.0-alpha.2"
                   ,author       : "RaptorX"
                   ,email        : ""
                   ,crtdate      : "July 26, 2022"
@@ -62,7 +62,10 @@ Catch err
 
 FileSelectFolder, wDir, *%A_ScriptDir%
 if !wDir
+{
 	MsgBox, % "No directory selected"
+	return
+}
 
 Gui, add, Edit, w200 vRequirement, % "#Requires Autohotkey v1.1.33+"
 Gui, add, Button, x+5 w75, % "Okay"
