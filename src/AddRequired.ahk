@@ -74,6 +74,7 @@ return
 
 ButtonOkay(CtrlHwnd, GuiEvent, EventInfo, ErrLevel:="")
 {
+	Gui, Submit
 	Loop, Files, %wDir%\*.ahk, FDR
 	{
 		FileRead, wFile, %A_LoopFileFullPath%
