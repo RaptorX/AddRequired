@@ -35,6 +35,29 @@
  * ============================================================================ *
  */
 
-;{#Includes;}
-;{#Directives;}--
-;{#Settings;}
+FileSelectFolder, wDir, *%A_ScriptDir%
+if !wDir
+	MsgBox, % "No directory selected"
+
+Gui, add, Edit, w200 vRequirement, % "#Requires Autohotkey v1.1.33+"
+Gui, add, Button, x+5 w75, % "Okay"
+Gui, Show
+return
+
+ButtonOkay(CtrlHwnd, GuiEvent, EventInfo, ErrLevel:="")
+{
+	Loop, Files, %wDir%\*.ahk, FDR
+	{
+		FileRead, wFile, %A_LoopFileFullPath%
+		if InStr(wFile, "#Requires")
+		{
+			OutputDebug, % "true"
+			Continue
+		}
+
+		hFile := FileOpen(A_LoopFileFullPath, "w")
+		hFile.Seek(0, 0)
+		hFile.Write(Requirement "`n" wFile)
+		OutputDebug, % "fixed " A_LoopFileName
+	}
+}
