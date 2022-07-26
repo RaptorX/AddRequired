@@ -74,10 +74,18 @@ return
 
 ButtonOkay(CtrlHwnd, GuiEvent, EventInfo, ErrLevel:="")
 {
+	static wProgress
+	global wDir, Requirement
+
 	Gui, Submit
-	Loop, Files, %wDir%\*.ahk, FDR
+	Gui Progress:new, -Caption
+	Gui Add, Progress, vwProgress -Smooth 0x8 w350 h5 ; PBS_MARQUEE = 0x8
+	Gui Add, Text, w350 Center, Working
+	Gui Show
+	
 	{
 		FileRead, wFile, %A_LoopFileFullPath%
+		GuiControl,, wProgress, 1
 		if InStr(wFile, "#Requires")
 		{
 			OutputDebug, % "true"
