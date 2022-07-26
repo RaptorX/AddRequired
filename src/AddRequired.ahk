@@ -1,7 +1,7 @@
 #SingleInstance force
 #Requires Autohotkey v1.1.33+
 ;--
-;@Ahk2Exe-SetVersion 1.0-alpha
+;@Ahk2Exe-SetVersion 1.0-alpha.1
 ;@Ahk2Exe-SetProductName addRequired
 ;@Ahk2Exe-SetDescription Adds requirement to all ahk files in the selected folder recursively
 /**
@@ -38,21 +38,27 @@
 ;{#Includes
  #Include <ScriptObject\ScriptObject>
  global script := {base         : script
-                 ,name          : regexreplace(A_ScriptName, "\.\w+")
-                 ,version      : "1.0-alpha"
-                 ,author       : "RaptorX"
-                 ,email        : ""
-                 ,crtdate      : "July 26, 2022"
-                 ,moddate      : "July 26, 2022"
-                 ,homepagetext : ""
-                 ,homepagelink : ""
-                 ,donateLink   : "https://www.paypal.com/donate?hosted_button_id=MBT5HSD9G94N6"
-                 ,resfolder    : A_ScriptDir "\res"
-                 ,iconfile     : A_ScriptDir "\res\sct.ico"
-                 ,configfile   : A_ScriptDir "\settings.ini"
-                 ,configfolder : A_ScriptDir ""}
+                  ,name          : regexreplace(A_ScriptName, "\.\w+")
+                  ,version      : "1.0-alpha.1"
+                  ,author       : "RaptorX"
+                  ,email        : ""
+                  ,crtdate      : "July 26, 2022"
+                  ,moddate      : "July 26, 2022"
+                  ,homepagetext : ""
+                  ,homepagelink : ""
+                  ,donateLink   : "https://www.paypal.com/donate?hosted_button_id=MBT5HSD9G94N6"
+                  ,resfolder    : A_ScriptDir "\res"
+                  ,iconfile     : A_ScriptDir "\res\sct.ico"
+                  ,configfile   : A_ScriptDir "\settings.ini"
+                  ,configfolder : A_ScriptDir ""}
 
 ;}
+
+try script.Update("https://raw.githubusercontent.com/RaptorX/AddRequired/master/ver"
+                 ,"https://github.com/RaptorX/AddRequired/releases/download/latest/AddRequired.zip")
+Catch err
+	if err.code != 6
+		MsgBox % err.msg
 
 FileSelectFolder, wDir, *%A_ScriptDir%
 if !wDir
