@@ -64,7 +64,7 @@ FileSelectFolder, wDir, *%A_ScriptDir%
 if !wDir
 {
 	MsgBox, % "No directory selected"
-	return
+	ExitApp
 }
 
 Gui, add, Edit, w200 vRequirement, % "#Requires Autohotkey v1.1.33+"
@@ -88,4 +88,10 @@ ButtonOkay(CtrlHwnd, GuiEvent, EventInfo, ErrLevel:="")
 		hFile.Write(Requirement "`n" wFile)
 		OutputDebug, % "fixed " A_LoopFileName
 	}
+	ExitApp
+}
+
+GuiClose()
+{
+	ExitApp
 }
